@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 public class Exercise09 {
 
+	private static Scanner scan; //전역변수 선언
+
 	public static void main(String[] args) {
 		boolean run = true;
 		int studentNum = 0;
 		int[] scores = null;
-		Scanner scan = new Scanner(System.in);
+		scan = new Scanner(System.in);
 		
 		while(run) {
 			System.out.println("--------------------------------------------------");
