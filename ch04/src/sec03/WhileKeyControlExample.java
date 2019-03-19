@@ -50,7 +50,7 @@ public class WhileKeyControlExample {
 				if (speed < 0)
 					speed = 0;
 			}
-			System.out.println("현재속도 = " + speed);
+			System.out.println("현재속도 = " + speed); //선택지에 재출력되는 이유?
 		}
 		System.out.println("프로그램 종료");
 	}
