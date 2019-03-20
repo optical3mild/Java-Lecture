@@ -59,6 +59,6 @@ public class StudentScore {
 
 	@Override //@: annotation
 	public String toString() {
-		return "StudentScore [name=" + name + ", math=" + math + ", eng=" + eng + ", sci=" + sci + ", avg=" + avg + "]";
+		return "StudentScore [name=" + name + ", math=" + math + ", eng=" + eng + ", sci=" + sci + ", avg=" + String.format("%.2f",avg) + "]";
 	}
 }
