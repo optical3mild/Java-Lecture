@@ -1,4 +1,4 @@
-package exercise.class_OpenChallenge;
+package ch06_exercise_oc01_student_score;
 
 public class StudentScore {
 	//필드 : 성명, 수/영/과 각 점수, 평균점수

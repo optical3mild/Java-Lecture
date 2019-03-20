@@ -1,4 +1,4 @@
-package exercise.ex20_retry;
+package ch06_exercise_ex20_working01;
 
 public class Account {
 	//필드

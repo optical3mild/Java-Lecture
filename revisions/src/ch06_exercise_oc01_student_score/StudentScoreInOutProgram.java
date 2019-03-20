@@ -1,4 +1,9 @@
-package exercise.class_OpenChallenge;
+package ch06_exercise_oc01_student_score;
+
+//추가수정사항
+// 1. class에 입력값 검사 메소드 -> 예외발생 시 프로그램 다운방지
+// 2. 배열로 한꺼번에 수신
+// 3. average() 출력값 조정 : 소수점 한자리 이하 절삭 or 반올림
 
 import java.util.Scanner;
 
@@ -8,11 +13,12 @@ public class StudentScoreInOutProgram {
 
 	public static void main(String[] args) {
 		
-		StudentScore stuScore = new StudentScore(null, 0, 0, 0); //객체
-		
 		boolean run = true;
 		
+		StudentScore stuScore = new StudentScore(null, 0, 0, 0); //객체
+		
 		scan = new Scanner(System.in); //"Scanner Scan = ..." : 로컬변수를 전역으로 변경(이클립스)
+										// *로컬변수일때 --> 반복문 바깥 마지막에 scan.close();
 		
 		while(run) {
 			System.out.println("-------------------------------------");
@@ -46,7 +52,7 @@ public class StudentScoreInOutProgram {
 				
 			case 4:
 				run = false;
-				break;	
+				break;
 			}
 		}
 	}

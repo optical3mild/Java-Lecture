@@ -1,4 +1,4 @@
-package exercise.ex20_retry;
+package ch06_exercise_ex20_working02;
 
 import java.util.Scanner;
 
@@ -39,55 +39,22 @@ public class BankApplication {
 		System.out.println("-----------");
 		System.out.print("계좌번호: ");
 		String ano = scan.nextLine(); // 입력값과 계좌리스트 비교, 일치여부 확인
-		//계좌정보가 있는지 확인 --> 있는 부분의 계좌번호 일치여부 확인
+		
 		for(int i=0; i<accountArray.length; i++) { //계좌목록 확인, 빈위치에 입력값 저장
-			if(accountArray[i] != null) {
-				if(accountArray[i].getAno() == ano) {
-					System.out.println("중복되는 번호입니다");
-				}
+			if(accountArray[i] == null) {
+				System.out.print("계좌주: ");
+				String owner = scan.nextLine();
+//				System.out.print('\n');
+				
+				System.out.print("초기입금액: ");
+				int balance = Integer.parseInt(scan.nextLine());
+//				System.out.print('\n');
+				
+				accountArray[i] = new Account(ano, owner, balance);
+				System.out.println("결과: 계좌가 생성되었습니다.");
+				break;
 			}
 		}
-//		for(int i=0; i<accountArray.length; i++) { //계좌목록 확인, 빈위치에 입력값 저장
-//			if(accountArray[i] == null) {
-//				System.out.print("계좌주: ");
-//				String owner = scan.nextLine();
-//				
-//				System.out.print("초기입금액: ");
-//				int balance = Integer.parseInt(scan.nextLine());
-//				
-//				accountArray[i] = new Account(ano, owner, balance);
-//				System.out.println("결과: 계좌가 생성되었습니다.");
-//				break;
-//			}
-//		}
-//		Account currentAccount;
-//		int index = 0;
-//		for(int i=0; i<accountArray.length; i++) {
-//			if(accountArray[i].getAno() == null) {
-//				index = i;
-//			}
-//			currentAccount = accountArray[index];
-//		}
-		
-		
-//		for(int i=0; i<accountArray.length; i++) {
-//			if(accountArray[i] == null) {
-//				System.out.println("계좌생성");
-//				System.out.println("-----------");
-//				
-//				System.out.print("계좌번호: ");
-//				String ano = scan.nextLine();
-//				
-//				System.out.print("계좌주: ");
-//				String owner = scan.nextLine();
-//				
-//				System.out.print("초기입금액: ");
-//				int balance = Integer.parseInt(scan.nextLine());
-//				
-//				accountArray[i] = new Account(ano, owner, balance);
-//				System.out.println("결과: 계좌가 생성되었습니다.");
-//			}
-//		}
 	}
 	//계좌목록보기
 	private static void accountList( ) {
@@ -116,6 +83,8 @@ public class BankApplication {
 			int saveMoney = Integer.parseInt(scan.nextLine());
 			currentAccount.setBalance(currentAccount.getBalance()+saveMoney);
 			System.out.println("결과: "+saveMoney+ "원 입금하였습니다");
+		} else {
+			System.out.println("계좌를 찾을 수 없습니다.");
 		}
 	}
 	//출금
@@ -137,6 +106,8 @@ public class BankApplication {
 				currentAccount.setBalance(currentAccount.getBalance()-drawMoney);
 				System.out.println("결과: "+ drawMoney + "원 출금하였습니다");
 			}
+		} else {
+			System.out.println("계좌를 찾을 수 없습니다.");
 		}
 	}
 	
@@ -144,10 +115,17 @@ public class BankApplication {
 	private static Account findAccount(String ano) { //계좌를 찾으면 계좌반환, 찾지 못하면 null반환
 		Account found = null;						//변수 초기화 필요
 		for(int i=0; i<accountArray.length; i++) {
-			if((accountArray[i].getAno()).equals(ano)) {
+			if(accountArray[i] == null) { //계좌가 비어있으면 정지
+				break;
+			}
+//			if(!(ano.equals(accountArray[i].getAno()))) { //계좌번호가 맞지않으면 출력, 정지
+////			if(!(accountArray[i].getAno()).equals(ano)) {
+//				System.out.println("계좌를 찾을 수 없습니다.");
+//				break;
+//			}
+			if(ano.equals(accountArray[i].getAno())) { //계좌번호가 맞으면 계좌정보 반환
+//			if((accountArray[i].getAno()).equals(ano)) {
 				found = accountArray[i];
-			} else {
-				System.out.println("결과: 계좌가 없습니다");
 			}
 		}
 		return found;
