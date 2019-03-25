@@ -24,7 +24,6 @@ public class DigitClock {
 		}
 		result = result1*3600 + result2*60 + result3*60;
 		
-//		System.out.println(arrayTimeMin[i].length);
 		System.out.println(result1);
 		System.out.println(result2);
 		System.out.println(result3);
