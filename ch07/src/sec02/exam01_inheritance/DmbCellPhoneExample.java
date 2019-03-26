@@ -1,4 +1,4 @@
-package sec02_exam01_inheritance;
+package sec02.exam01_inheritance;
 
 public class DmbCellPhoneExample {
 
