@@ -23,7 +23,7 @@ public class PalindromeExample {
 				}
 			}
 		}
-		System.out.println("세자리수를 곱해 만들 수 있는 가장 큰 대칭수: " + result);;
+		System.out.println("세자리수를 곱해 만들 수 있는 가장 큰 대칭수: " + result);
 	}
 	
 	public static String revStr(String str) {
