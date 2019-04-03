@@ -1,5 +1,7 @@
 package basic02;
 
+import java.util.List;
+
 public class SongTest {
 
 	public static void main(String[] args) {
@@ -11,7 +13,7 @@ public class SongTest {
 //		SongDTO sDto = sDao.selectOne(117);
 //		System.out.println(sDto.toString() + "\n");
 		
-		SongDTO sDto = sDao.selectOne(119);
+//		SongDTO sDto = sDao.selectOne(119);
 //		System.out.println(sDto.toString() + "\n");
 //		sDto.setTitle("넌 이즈 뭔들");
 //		sDto.setLyrics("나 지금 너 땜에 혼란스러");
@@ -19,7 +21,13 @@ public class SongTest {
 //		sDto = sDao.selectOne(118);
 //		System.out.println(sDto.toString() + "\n");
 
-		sDao.deleteSong(sDto);
+//		sDao.deleteSong(sDto);
+
+		List<SongDTO> songList = sDao.selectAll();
+		for(SongDTO song : songList) {
+			System.out.println(song.toString());
+		}
+		
 		sDao.close();
 	}
 
