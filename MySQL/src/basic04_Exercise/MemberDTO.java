@@ -1,4 +1,4 @@
-package exercise;
+package basic04_Exercise;
 
 public class MemberDTO {
 	private int id;

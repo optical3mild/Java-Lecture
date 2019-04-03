@@ -1,4 +1,4 @@
-package exercise;
+package basic04_Exercise;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class MemberTest {
 //		}
 
 		//검색연습
-		List<MemberDTO> members = mDao.selectMemberByName("김자바");
+		List<MemberDTO> members = mDao.selectMembersByName("김자바");
 		for(MemberDTO member : members) {
 			System.out.println(member.toString());
 		}

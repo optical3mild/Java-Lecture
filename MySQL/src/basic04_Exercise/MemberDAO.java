@@ -1,4 +1,4 @@
-package exercise;
+package basic04_Exercise;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +29,7 @@ public class MemberDAO {
 	}
 	
 	//Insert
-	public void insertMember(MemberDTO member) { //sql구문 : 모든 col에 입력하지 않을 시, 입력할 col을 명시하여야 한다.
+	public void insertMember(MemberDTO member) { //sql구문 : 모든 column에 입력하지 않을 시, 입력할 column을 명시하여야 한다.
 		String query = "insert into member(password, name, birthday, address) values(?,?,?,?);";
 		PreparedStatement pStmt = null;
 		
@@ -53,13 +53,6 @@ public class MemberDAO {
 		}
 	}
 
-	//select *
-	public List<MemberDTO> selectAll() {
-		String sql = "select * from member order by id desc;";
-		List<MemberDTO> memberList = selectCondition(sql);
-		return memberList;
-	}
-	
 	//update
 	public void updateMember(MemberDTO member) {
 		String query = "update member set password=?, name=?, birthday=?, address=? where id=?;";
@@ -107,13 +100,6 @@ public class MemberDAO {
 			}
 		}
 	}
-
-	//select * from member where name like ...
-	public MemberDTO selectMemberByName(String name) {
-		String sql = "select * from member where name like '"+ name + "' order by id asc;";
-		MemberDTO mDto = selectOne(sql);
-		return mDto;
-	}
 	
 	//close()
 	public void close() {
@@ -154,6 +140,27 @@ public class MemberDAO {
 	}
 		
 	
+	//select * from member where id
+	public MemberDTO selectMemberById(int id) {
+		String query = "select * from member where id=?;";
+		MemberDTO member = selectOne(query);
+		return member;
+	}
+	
+	//select *
+	public List<MemberDTO> selectAll() {
+		String query = "select * from member order by id desc;";
+		List<MemberDTO> memberList = selectCondition(query);
+		return memberList;
+	}
+
+	//select * from member where name like ...
+	public List<MemberDTO> selectMembersByName(String name) {
+		String query = "select * from member where name like '"+ name + "' order by id asc;";
+		List<MemberDTO> memberList = selectCondition(query);
+		return memberList;
+	}
+
 	
 //---[Selection]---------------------------------------------------------	
 	//쿼리문에 따라 한종류만 선택
@@ -215,39 +222,4 @@ public class MemberDAO {
 		}
 		return memberList;
 	}
-	
-	
-	
-	
-	
-	//폐기
-//	public MemberDTO selectOne(int id) {
-//		String query = "select * from member where id=?;";
-//		PreparedStatement pStmt = null;
-//		MemberDTO member = new MemberDTO();
-//		
-//		try {
-//			pStmt = conn.prepareStatement(query);
-//			pStmt.setInt(1, id);
-//			ResultSet rs = pStmt.executeQuery();
-//			
-//			while(rs.next()) { //DB에서 data수신
-//				member.setId(rs.getInt(1));
-//				member.setPassword(rs.getString(2));
-//				member.setName(rs.getString(3));
-//				member.setBirthday(rs.getString(4));
-//				member.setAddress(rs.getString(5));
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if(pStmt != null && !pStmt.isClosed())
-//					pStmt.close();
-//			} catch (SQLException se) {
-//				se.printStackTrace();
-//			}
-//		}
-//		return member;
-//	}
 }
