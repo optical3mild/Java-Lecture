@@ -1,4 +1,4 @@
-package basic04_Exercise;
+package basic05_Exercise;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

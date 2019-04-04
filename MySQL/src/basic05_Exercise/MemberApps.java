@@ -1,4 +1,4 @@
-package basic04_Exercise;
+package basic05_Exercise;
 
 import java.util.List;
 import java.util.Scanner;
@@ -87,7 +87,8 @@ public class MemberApps {
 	}
 	
 	//6. 로그인
-	public static void memberLogin() {
+	static int memberLogin() {
+		int result = -1;
 		System.out.println("[6.로그인]");
 		System.out.print("ID> ");
 		int inputId = Integer.parseInt(scan.nextLine());
@@ -98,12 +99,15 @@ public class MemberApps {
 		
 		if (inputId != mDto.getId()) {
 			System.out.println("ID가 존재하지 않습니다.");
-			return;
+			System.exit(result);								//시스템 종료
 		}
 		if (!password.equals(mDto.getPassword())) {
 			System.out.println("패스워드가 틀렸습니다.");
-			return;
+			System.exit(result);
+		} else {
+			System.out.println("로그인 되었습니다.");
+			result = mDto.getId();
 		}
-		System.out.println("로그인 되었습니다.");
+		return result;
 	}
 }
