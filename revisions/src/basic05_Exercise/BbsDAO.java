@@ -112,9 +112,10 @@ public class BbsDAO {
 	}
 	
 	//delete
-	public void deleteText(BbsDTO updateText) { //매개변수: DTO로 받아도 되고, 정수값으로 받아도 됨. (int num) 
+	public void deleteText(BbsDTO updateText, int memberId) { //매개변수: DTO로 받아도 되고, 정수값으로 받아도 됨. (int num) 
+//		String query = "delete from member where id=?;";
 		String query = "delete from bbs_table from bbs_table as b inner join member as m "+
-						"on b.memberId = m.id where b.id=?;";
+						"on b.memberId = m.id where b.id=? and m.id="+memberId+";";
 		PreparedStatement pStmt = null;
 		
 		try {
@@ -137,9 +138,10 @@ public class BbsDAO {
 	//detail search
 	public BbsMember detailsearch(int id) {
 		String query = "select b.id, b.title, m.name, b.date, b.content from bbs_table as b " + 
-				"join member as m on b.memberId=m.id where b.id=?;";
+				"join member as m on b.memberId=m.id where bbs.id=?;";
 		PreparedStatement pStmt = null;
 		BbsMember bmDto = new BbsMember();
+//		int result = -1;
 		try {
 			pStmt = conn.prepareStatement(query);
 			pStmt.setInt(1, id);
@@ -163,6 +165,50 @@ public class BbsDAO {
 			}
 		}
 		return bmDto;
+	}
+	
+	
+	
+	
+	
+	//close()
+	public void close() {
+		try {
+			if(conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	//Create Table
+	public void createTable() { //col항목을 받아 생성하는 메소드로 수정할 것.
+		String query = "create table if not exists bbs_table (" + 
+						"id int(6) unsigned not null auto_increment," + 
+						"memberId int(6) unsigned not null," + 
+						"title varchar(50) not null," + 
+						"date datetime not null default current_timestamp "+ //default now()도 가능
+						"ON UPDATE CURRENT_TIMESTAMP," + 
+						"content varchar(400)," + 
+						"primary key(id)," + 
+						"foreign key(memberId) references member(id)"+
+						")default charset=utf8;";
+		
+		PreparedStatement pStmt = null;
+		
+		try {
+			pStmt = conn.prepareStatement(query);
+			pStmt.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pStmt != null && !pStmt.isClosed())
+					pStmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 	
 	//select * from bbs_table where id --> join으로 memberId로 연동하여 하나를 선택, 다른메소드에 전달.
@@ -239,45 +285,5 @@ public class BbsDAO {
 			}
 		}
 		return bbsList;
-	}
-	
-	//close()
-	public void close() {
-		try {
-			if(conn != null && !conn.isClosed())
-				conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-			
-	//Create Table
-	public void createTable() { //col항목을 받아 생성하는 메소드로 수정할 것.
-		String query = "create table if not exists bbs_table (" + 
-						"id int(6) unsigned not null auto_increment," + 
-						"memberId int(6) unsigned not null," + 
-						"title varchar(50) not null," + 
-						"date datetime not null default current_timestamp "+ //default now()도 가능
-						"ON UPDATE CURRENT_TIMESTAMP," + 
-						"content varchar(400)," + 
-						"primary key(id)," + 
-						"foreign key(memberId) references member(id)"+
-						")default charset=utf8;";
-		
-		PreparedStatement pStmt = null;
-		
-		try {
-			pStmt = conn.prepareStatement(query);
-			pStmt.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pStmt != null && !pStmt.isClosed())
-					pStmt.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
-		}
 	}
 }

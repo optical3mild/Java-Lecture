@@ -3,7 +3,7 @@ package basic05_Exercise;
 import java.util.List;
 import java.util.Scanner;
 
-public class BbsApps {
+public class BbsApps extends MemberApps {
 	static Scanner scan = new Scanner(System.in);
 	static BbsDAO bDao = new BbsDAO();
 	
@@ -58,14 +58,15 @@ public class BbsApps {
 		if (content.length() != 0) {
 			text.setContent(content);
 		}
+		
 		bDao.updateText(text, memberId);
 	}
 	
 	//4. 삭제
-	static void deleteContents(int memberId) {
+	static void deleteContents(MemberDTO mDto) {
 		System.out.println("[4.삭제]");
 		//Id기준 search로 본인의 글 list를 보여줌
-		List<BbsDTO> contents = bDao.selectListByMemberId(memberId);
+		List<BbsDTO> contents = bDao.selectListByMemberId(mDto.getId());
 		for(BbsDTO content : contents) {
 			System.out.println(content.toString());
 		}
@@ -73,47 +74,40 @@ public class BbsApps {
 		System.out.print("삭제할 글을 선택하세요(Id 입력)> ");
 		int inputId = Integer.parseInt(scan.nextLine());
 		BbsDTO bDto = bDao.selectContentById(inputId); //Id와 일치하는 객체생성
-		
-		if (bDto.getMemberId() != memberId) {		//
-			System.out.println("삭제 권한이 없음");
-			return;
-		}
-		
-		bDao.deleteText(bDto);
+		bDao.deleteText(bDto, mDto.getId());
 	}
 	
 	//5. 상세조회
 	// 입력: id  --> 출력: title, name, date, content
 	static void searchDetail() {
 		System.out.println("[5.상세조회]");
-		System.out.print("조회할 글을 선택하세요(Id 입력)> ");
+		System.out.print("상세조회할 ID> ");
 		int id = Integer.parseInt(scan.nextLine());
 		BbsMember bm = bDao.detailsearch(id);
 		System.out.println(bm.fullString());
 	}
 	
-	//6. 로그인
-	// basic04의 DB를 활용. 클래스, 메소드 일부를 이용
-	static int bbsLogin() {
-		System.out.println("[BBS 로그인]");
-		System.out.print("ID> ");
-		int inputId = Integer.parseInt(scan.nextLine());
-		System.out.print("패스워드> ");
-		String password = scan.nextLine();
-		
-		basic04_Exercise.MemberDAO mDao = new basic04_Exercise.MemberDAO();
-		basic04_Exercise.MemberDTO mDto = mDao.selectMemberById(inputId);
-		
-		if (inputId != mDto.getId()) { //입력값과 객체의 내용을 비교
-			System.out.println("ID가 존재하지 않습니다.");
-			System.exit(-1);
-		}
-		if (!password.equals(mDto.getPassword())) {
-			System.out.println("패스워드가 틀렸습니다.");
-			System.exit(-1);
-		}
-		System.out.println("로그인 되었습니다.");
-		mDao.close();
-		return inputId;
-	}
+	//6. 로그인 : basic04의 DB를 활용. 클래스, 메소드 일부를 이용
+//	static int bbsLogin() {
+//		System.out.println("[6.로그인]");
+//		System.out.print("ID> ");
+//		int inputId = Integer.parseInt(scan.nextLine());
+//		System.out.print("패스워드> ");
+//		String password = scan.nextLine();
+//		
+////		basic04_Exercise.MemberDAO mDao = new basic04_Exercise.MemberDAO();
+////		basic04_Exercise.MemberDTO mDto = mDao.selectMemberById(inputId);
+//		
+//		if (inputId != mDto.getId()) { //입력값과 객체의 내용을 비교
+//			System.out.println("ID가 존재하지 않습니다.");
+//			System.exit(-1);
+//		}
+//		if (!password.equals(mDto.getPassword())) {
+//			System.out.println("패스워드가 틀렸습니다.");
+//			System.exit(-1);
+//		}
+//		System.out.println("로그인 되었습니다.");
+//		mDao.close();
+//		return inputId;
+//	}
 }
