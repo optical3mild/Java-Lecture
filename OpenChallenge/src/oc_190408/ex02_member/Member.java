@@ -24,14 +24,17 @@ public class Member implements Comparable {
 	public void setAge(int age) {this.age = age;}
 
 	@Override
-	public int compareTo(Member member) {
+	public int compareTo(Object o) {
 		int result = -2;
-		if(this.age < member.getAge()) {
-			result = -1;
-		} else if (this.age > member.getAge()) {
-			result = 1;
-		} else if (this.age == member.getAge()) {
-			result = 0;
+		if(o instanceof Member) {
+			Member member = (Member) o;
+			if(this.age < member.getAge()) {
+				result = -1;
+			} else if (this.age > member.getAge()) {
+				result = 1;
+			} else if (this.age == member.getAge()) {
+				result = 0;
+			}
 		}
 		return result;
 	}
