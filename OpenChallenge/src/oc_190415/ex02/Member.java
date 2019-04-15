@@ -44,15 +44,20 @@ public class Member implements Comparable<Member>{
 	@Override
 	public int compareTo(Member o) { //결과값 -1,0,1  --> 이름, 전화번호 비교
 		
-		if(name.compareTo(o.getName()) == 0) { //이름 비교 --> 같으면 전화번호 비교
-			if(pNum.compareTo(o.getpNum()) == 0) {	//이름, 전화번호 동일 : 동일인물
-				return 0;							
-			} else {
-				return pNum.compareTo(o.getpNum()); //이름 동일한 경우, 전화번호 비교, 리턴
-			}
-		} else {
-			return name.compareTo(o.getName()); //이름 다를경우, 이름비교값 리턴
-		}
+//		if(name.compareTo(o.getName()) == 0) { //이름 비교 --> 같으면 전화번호 비교
+//			if(pNum.compareTo(o.getpNum()) == 0) {	//이름, 전화번호 동일 : 동일인물
+//				return 0;							
+//			} else {
+//				return pNum.compareTo(o.getpNum()); //이름 동일한 경우, 전화번호 비교, 리턴
+//			}
+//		} else {
+//			return name.compareTo(o.getName()); //이름 다를경우, 이름비교값 리턴
+//		}
+		
+		//간략화
+		if(name.compareTo(o.getName()) > 0) return 1;	//이름이 동일하지 않은 경우
+		if(name.compareTo(o.getName()) < 0) return -1;
+		else return pNum.compareTo(o.getpNum()); //이름이 동일한 경우: 전화번호만 비교, 리턴
 	}
 	
 }
