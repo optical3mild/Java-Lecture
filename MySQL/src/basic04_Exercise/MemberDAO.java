@@ -52,7 +52,44 @@ public class MemberDAO {
 			}
 		}
 	}
-
+	
+	//password 암호화
+	public void initPassword() {
+		List<MemberDTO> mList = selectAll(); //리스트를 전부 가져옴
+		for(MemberDTO member: mList) {
+			int id = member.getId();
+			String plainPassword = member.getPassword();
+			String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+			System.out.println(member.toString());
+			updatePassword(id, hashedPassword);
+		}
+	}
+	
+	public void updatePassword(int id, String hashed) {
+		String query = "update member set hashed=? where id=?;";
+		PreparedStatement pStmt = null;
+		
+		try {
+			pStmt = conn.prepareStatement(query);
+			pStmt.setString(1, hashed);
+			
+			pStmt.setInt(2, id);
+			
+			
+			pStmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pStmt != null && !pStmt.isClosed())
+					pStmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	
 	//update
 	public void updateMember(MemberDTO member) {
 		String query = "update member set password=?, name=?, birthday=?, address=? where id=?;";
