@@ -113,7 +113,7 @@ public class BbsDAO {
 	
 	//delete
 	public void deleteText(BbsDTO updateText) { //매개변수: DTO로 받아도 되고, 정수값으로 받아도 됨. (int num) 
-		String query = "delete from bbs_table from bbs_table as b inner join member as m "+
+		String query = "delete from bbs_table as b inner join member as m "+
 						"on b.memberId = m.id where b.id=?;";
 		PreparedStatement pStmt = null;
 		
